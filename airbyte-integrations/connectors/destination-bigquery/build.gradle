@@ -10,7 +10,6 @@ application {
 }
 
 dependencies {
-    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.6'
     implementation 'com.google.cloud:google-cloud-bigquery:1.122.2'
     implementation 'org.apache.commons:commons-lang3:3.11'
 

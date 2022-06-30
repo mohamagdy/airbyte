@@ -25,7 +25,7 @@ class Initializer:
         for stream in self.configured_catalog.streams:
             schema = stream.stream.namespace
             stream_name = stream.stream.name
-            primary_keys = reduce(iconcat, stream.primary_key, [])
+            primary_keys = list(map(lambda pks: [stream_name] + pks, stream.primary_key)) or [[]]
 
             converter = JsonToTables(stream.stream.json_schema, schema=schema, root_table=stream_name, primary_keys=primary_keys)
             converter.convert()

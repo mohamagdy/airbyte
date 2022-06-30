@@ -12,7 +12,7 @@ PARENT_CHILD_SPLITTER = "."
 
 
 class JsonToTables:
-    def __init__(self, json_schema: dict, schema: str, root_table: str, primary_keys: Optional[List[str]]):
+    def __init__(self, json_schema: dict, schema: str, root_table: str, primary_keys: Optional[List[List[str]]]):
         self.json_schema = json_schema
 
         self.schema = schema
@@ -24,11 +24,12 @@ class JsonToTables:
     def convert(self):
         for item_key, item_value in self.json_schema.items():
             if item_key == "properties":
-                self._extract_tables(item_value, name=self.root, primary_keys=self.primary_keys)
+                self._extract_tables(item_value, name=self.root)
 
-    def _extract_tables(self, properties: dict, name: str, primary_keys: List[str] = None, references: Table = None):
+    def _extract_tables(self, properties: dict, name: str, references: Table = None):
         table_name = name.replace(PARENT_CHILD_SPLITTER, "_")
-        table = Table(schema=self.schema, name=table_name, primary_keys=primary_keys, references=references)
+        table_primary_keys = list(map(lambda pk: pk[-1], filter(lambda pks: pks[0:-1] == name.split("."), self.primary_keys or [[]])))
+        table = Table(schema=self.schema, name=table_name, primary_keys=table_primary_keys, references=references)
         self.tables[name] = table
 
         for property_key, property_value in properties.items():

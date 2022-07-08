@@ -136,6 +136,9 @@ class RecordsWriter:
                 copy_statement = staging_table.copy_csv_gzip_statement(iam_role_arn=self.iam_role_arn, s3_full_path=s3_full_path)
                 cursor.execute(copy_statement)
 
+                deduplicate_statement = staging_table.deduplicate_statement()
+                cursor.execute(deduplicate_statement)
+
                 upsert_statements = final_table.upsert_statements(staging_table=staging_table)
                 cursor.execute(upsert_statements)
 

@@ -99,6 +99,15 @@ class Table:
 
         return f"{delete_from_final_table};{insert_into_final_table};{truncate_staging_table};"
 
+    def deduplicate_statement(self) -> str:
+        return f"""
+                WITH duplicates AS (
+                    SELECT *, row_number() OVER (PARTITION BY {AIRBYTE_ID_NAME} ORDER BY {AIRBYTE_EMITTED_AT_NAME} DESC) as rn
+                    FROM {self.schema}.{self.name}
+                )
+                DELETE FROM {self.schema}.{self.name} WHERE {AIRBYTE_ID_NAME} IN (SELECT {AIRBYTE_ID_NAME} FROM duplicates WHERE rn > 1)
+            """
+
     @property
     def _reference_key_name(self) -> Optional[str]:
         if self.references:

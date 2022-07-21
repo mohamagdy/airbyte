@@ -11,7 +11,7 @@ from destination_redshift_no_dbt.table import Table
 PARENT_CHILD_SPLITTER = "."
 
 
-class JsonToTables:
+class JsonSchemaToTables:
     def __init__(self, json_schema: dict, schema: str, root_table: str, primary_keys: Optional[List[List[str]]]):
         self.json_schema = json_schema
 

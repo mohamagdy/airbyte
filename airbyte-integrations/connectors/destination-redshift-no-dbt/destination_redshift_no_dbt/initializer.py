@@ -10,7 +10,7 @@ from airbyte_cdk.models import ConfiguredAirbyteCatalog, DestinationSyncMode
 
 from destination_redshift_no_dbt import ConnectionPool
 from destination_redshift_no_dbt.csv_writer import CSVWriter
-from destination_redshift_no_dbt.jsonschema_to_tables import JsonToTables
+from destination_redshift_no_dbt.json_schema_to_tables import JsonSchemaToTables
 from destination_redshift_no_dbt.stream import Stream
 
 
@@ -27,7 +27,7 @@ class Initializer:
             stream_name = stream.stream.name
             primary_keys = list(map(lambda pks: [stream_name] + pks, stream.primary_key)) or [[]]
 
-            converter = JsonToTables(stream.stream.json_schema, schema=schema, root_table=stream_name, primary_keys=primary_keys)
+            converter = JsonSchemaToTables(stream.stream.json_schema, schema=schema, root_table=stream_name, primary_keys=primary_keys)
             converter.convert()
 
             sync_mode = stream.destination_sync_mode

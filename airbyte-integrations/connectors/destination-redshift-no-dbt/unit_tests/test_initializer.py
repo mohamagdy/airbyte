@@ -31,7 +31,7 @@ class TestInitializer(TestCase):
             connection_pool=self.connection_pool_mock
         )
 
-    @patch("destination_redshift_no_dbt.initializer.JsonToTables")
+    @patch("destination_redshift_no_dbt.initializer.JsonSchemaToTables")
     def test_streams(self, json_to_tables_mock):
         json_to_tables_instance_mock = json_to_tables_mock.return_value
 

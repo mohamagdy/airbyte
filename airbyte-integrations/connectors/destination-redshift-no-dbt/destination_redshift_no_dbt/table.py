@@ -9,7 +9,8 @@ from destination_redshift_no_dbt.field import Field, DataType
 AIRBYTE_ID_NAME = "_airbyte_ab_id"
 AIRBYTE_EMITTED_AT_NAME = "_airbyte_emitted_at"
 
-AIRBYTE_KEY_DATA_TYPE = DataType(name=VARCHAR, length="32")
+AIRBYTE_KEY_MAX_LENGTH = "32"
+AIRBYTE_KEY_DATA_TYPE = DataType(name=VARCHAR, length=AIRBYTE_KEY_MAX_LENGTH)
 AIRBYTE_AB_ID = Field(name=AIRBYTE_ID_NAME, data_type=AIRBYTE_KEY_DATA_TYPE)
 AIRBYTE_EMITTED_AT = Field(name=AIRBYTE_EMITTED_AT_NAME, data_type=DataType(name=TIMESTAMP_WITHOUT_TIME_ZONE))
 
@@ -39,6 +40,9 @@ class Table:
     @property
     def fields(self) -> List[Field]:
         return list(filter(None, [*self._fields, AIRBYTE_AB_ID, AIRBYTE_EMITTED_AT, self.reference_key]))
+
+    def add_field(self, field: Field):
+        self._fields.append(field)
 
     @property
     def field_names(self) -> List[str]:

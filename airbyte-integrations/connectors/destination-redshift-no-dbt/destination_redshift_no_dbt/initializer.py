@@ -2,8 +2,6 @@
 # Copyright (c) 2022 Airbyte, Inc., all rights reserved.
 #
 from copy import deepcopy
-from functools import reduce
-from operator import iconcat
 from typing import Dict
 
 from airbyte_cdk.models import ConfiguredAirbyteCatalog, DestinationSyncMode
@@ -27,8 +25,8 @@ class Initializer:
             stream_name = stream.stream.name
             primary_keys = list(map(lambda pks: [stream_name] + pks, stream.primary_key)) or [[]]
 
-            converter = JsonSchemaToTables(stream.stream.json_schema, schema=schema, root_table=stream_name, primary_keys=primary_keys)
-            converter.convert()
+            converter = JsonSchemaToTables(schema=schema, root_table=stream_name, primary_keys=primary_keys)
+            converter.convert(stream.stream.json_schema)
 
             sync_mode = stream.destination_sync_mode
             streams[stream_name] = Stream(namespace=schema, name=stream_name, destination_sync_mode=sync_mode, final_tables=converter.tables)

@@ -97,4 +97,4 @@ class DestinationRedshiftNoDbt(Destination):
                 records_writer.write(message=message)
 
         records_writer.flush()
-        self.connection_pool.closeall()
+        self.connection_pool.close_all()

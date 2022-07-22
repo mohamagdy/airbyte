@@ -107,7 +107,7 @@ class TestDestination(TestCase):
 
         assert len(list(messages)) == 1
         assert records_writer_instance_mock.flush.call_count == 2
-        connection_pool_instance_mock.closeall.assert_called_once()
+        connection_pool_instance_mock.close_all.assert_called_once()
 
     @patch("destination_redshift_no_dbt.destination.ConfiguredAirbyteCatalog")
     @patch("destination_redshift_no_dbt.destination.RecordsWriter")
@@ -143,7 +143,7 @@ class TestDestination(TestCase):
 
         assert len(list(messages)) == 0
         assert records_writer_instance_mock.flush.call_count == 2
-        connection_pool_instance_mock.closeall.assert_called_once()
+        connection_pool_instance_mock.close_all.assert_called_once()
 
     @patch("destination_redshift_no_dbt.destination.ConfiguredAirbyteCatalog")
     @patch("destination_redshift_no_dbt.destination.RecordsWriter")
@@ -180,4 +180,4 @@ class TestDestination(TestCase):
         assert len(list(messages)) == 0
         records_writer_instance_mock.write.assert_called_once_with(message=message_mock)
         assert records_writer_instance_mock.flush.call_count == 1
-        connection_pool_instance_mock.closeall.assert_called_once()
+        connection_pool_instance_mock.close_all.assert_called_once()

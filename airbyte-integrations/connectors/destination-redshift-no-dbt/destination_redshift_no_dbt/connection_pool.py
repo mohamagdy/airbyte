@@ -32,3 +32,6 @@ class ConnectionPool:
 
     def put_connection(self, connection: Connection):
         self.connection_pool.putconn(connection)
+
+    def close_all(self):
+        self.connection_pool.closeall()

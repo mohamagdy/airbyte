@@ -2,7 +2,6 @@
 # Copyright (c) 2022 Airbyte, Inc., all rights reserved.
 #
 import argparse
-import logging
 from typing import Mapping, Any, Iterable, Dict
 
 from airbyte_cdk import AirbyteLogger
@@ -15,8 +14,6 @@ from destination_redshift_no_dbt.initializer import Initializer
 from destination_redshift_no_dbt.records_writer import RecordsWriter
 from destination_redshift_no_dbt.s3_objects_manager import S3ObjectsManager
 from destination_redshift_no_dbt.stream import Stream
-
-logger = logging.getLogger("airbyte")
 
 
 class DestinationRedshiftNoDbt(Destination):

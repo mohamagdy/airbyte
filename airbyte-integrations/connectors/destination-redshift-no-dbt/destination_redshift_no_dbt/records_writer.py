@@ -94,7 +94,7 @@ class RecordsWriter:
                 self._flush_csv_writer_to_destination(
                     csv_writer=self.csv_writers[final_table.name],
                     final_table=final_table,
-                    staging_table=stream.staging_tables[key],
+                    staging_table=stream.staging_tables.get(key),
                     mode=stream.destination_sync_mode
                 )
 

@@ -1,0 +1,47 @@
+{
+  "documentationUrl": "https://docs.airbyte.io/integrations/destinations/singlestore",
+  "supported_destination_sync_modes": ["overwrite", "append", "append_dedup"],
+  "supportsIncremental": true,
+  "supportsDBT": false,
+  "supportsNormalization": false,
+  "connectionSpecification": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Destination SingleStore",
+    "type": "object",
+    "required": ["host", "port","username", "password"],
+    "additionalProperties": false,
+    "properties": {
+      "host": {
+        "description": "Host Endpoint of the SingleStore Cluster",
+        "type": "string",
+        "title": "Host",
+        "order": 1
+      },
+      "port": {
+        "description": "Port of the database.",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 65536,
+        "default": 3306,
+        "examples": [
+          "3306"
+        ],
+        "title": "Port",
+        "order": 2
+      },
+      "username": {
+        "description": "Username to use to access the database.",
+        "type": "string",
+        "title": "Username",
+        "order": 3
+      },
+      "password": {
+        "description": "Password associated with the username.",
+        "type": "string",
+        "airbyte_secret": true,
+        "title": "Password",
+        "order": 4
+      }
+    }
+  }
+}

@@ -7,7 +7,8 @@ from setuptools import find_packages, setup
 
 MAIN_REQUIREMENTS = [
     "airbyte-cdk",
-    "singlestoredb==0.4.0"
+    "singlestoredb==0.4.0",
+    "dotmap==1.3.30"
 ]
 
 TEST_REQUIREMENTS = ["pytest~=6.1"]

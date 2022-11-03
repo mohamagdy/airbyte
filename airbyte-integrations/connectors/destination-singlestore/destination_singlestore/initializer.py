@@ -1,6 +1,7 @@
 #
 # Copyright (c) 2022 Airbyte, Inc., all rights reserved.
 #
+import logging
 from copy import deepcopy
 from typing import Dict
 
@@ -10,6 +11,9 @@ from singlestoredb.connection import Connection
 from destination_singlestore.csv_writer import CSVWriter
 from destination_singlestore.json_schema_to_tables import JsonSchemaToTables
 from destination_singlestore.stream import Stream
+
+
+logger = logging.getLogger("airbyte")
 
 
 class Initializer:
@@ -29,7 +33,16 @@ class Initializer:
             converter.convert(stream.stream.json_schema)
 
             sync_mode = stream.destination_sync_mode
-            streams[stream_name] = Stream(namespace=schema, name=stream_name, destination_sync_mode=sync_mode, final_tables=converter.tables)
+
+            if schema:
+                streams[stream_name] = Stream(
+                    namespace=schema,
+                    name=stream_name,
+                    destination_sync_mode=sync_mode,
+                    final_tables=converter.tables
+                )
+            else:
+                logger.fatal(f"Stream {stream_name} doesn't have a schema set.")
 
         return streams
 

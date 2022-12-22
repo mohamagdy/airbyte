@@ -3,16 +3,15 @@
 #
 from unittest import TestCase
 
-from destination_singlestore.data_type_converter import DataTypeConverter, VARCHAR, MAX_LENGTH, DOUBLE, BIGINT, BOOLEAN, \
-    TIMESTAMP, TIME, DATE
+from destination_singlestore.data_type_converter import DataTypeConverter, VARCHAR, DOUBLE, BIGINT, BOOLEAN, \
+    TIMESTAMP, TIME, DATE, TEXT
 
 
 class TestDataTypeConverter(TestCase):
     def test_convert_string(self):
         actual_data_type = DataTypeConverter.convert("string")
     
-        assert actual_data_type.name == VARCHAR
-        assert actual_data_type.length == MAX_LENGTH
+        assert actual_data_type.name == TEXT
     
     def test_convert_string_with_length(self):
         length = "255"

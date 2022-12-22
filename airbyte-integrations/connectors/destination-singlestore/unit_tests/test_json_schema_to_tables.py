@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from destination_singlestore.data_type_converter import VARCHAR, TIMESTAMP, MAX_LENGTH
+from destination_singlestore.data_type_converter import VARCHAR, TIMESTAMP, TEXT
 from destination_singlestore.json_schema_to_tables import JsonSchemaToTables
 from destination_singlestore.table import AIRBYTE_ID_NAME, AIRBYTE_EMITTED_AT_NAME, AIRBYTE_KEY_MAX_LENGTH
 
@@ -204,8 +204,7 @@ class TestJsonSchemaToTables(TestCase):
         ]
 
         street_field = list(filter(lambda field: field.name == street_field_mock, users_address_table.fields))[0]
-        assert street_field.data_type.name == VARCHAR
-        assert street_field.data_type.length == MAX_LENGTH
+        assert street_field.data_type.name == TEXT
 
         airbyte_id_field = list(filter(lambda field: field.name == AIRBYTE_ID_NAME, users_address_table.fields))[0]
 
@@ -278,8 +277,7 @@ class TestJsonSchemaToTables(TestCase):
 
         flags_field = list(filter(lambda field: field.name == tags_field_mock, users_table.fields))[0]
 
-        assert flags_field.data_type.name == VARCHAR
-        assert flags_field.data_type.length == MAX_LENGTH
+        assert flags_field.data_type.name == TEXT
 
         airbyte_id_field = list(filter(lambda field: field.name == AIRBYTE_ID_NAME, users_table.fields))[0]
 
@@ -344,8 +342,7 @@ class TestJsonSchemaToTables(TestCase):
 
         flags_field = list(filter(lambda field: field.name == tags_field_mock, users_table.fields))[0]
 
-        assert flags_field.data_type.name == VARCHAR
-        assert flags_field.data_type.length == MAX_LENGTH
+        assert flags_field.data_type.name == TEXT
 
         airbyte_id_field = list(filter(lambda field: field.name == AIRBYTE_ID_NAME, users_table.fields))[0]
 
@@ -441,8 +438,7 @@ class TestJsonSchemaToTables(TestCase):
 
         street_field = list(filter(lambda field: field.name == street_field_mock, user_addresses_table.fields))[0]
 
-        assert street_field.data_type.name == VARCHAR
-        assert street_field.data_type.length == MAX_LENGTH
+        assert street_field.data_type.name == TEXT
 
         airbyte_id_field = list(filter(lambda field: field.name == AIRBYTE_ID_NAME, users_table.fields))[0]
 

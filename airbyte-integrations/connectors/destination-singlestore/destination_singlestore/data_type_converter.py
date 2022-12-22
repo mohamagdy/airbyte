@@ -6,6 +6,7 @@ from typing import List, Union
 from destination_singlestore.field import DataType
 
 VARCHAR = "VARCHAR"
+TEXT = "TEXT"
 DOUBLE = "DOUBLE"
 BIGINT = "BIGINT"
 BOOLEAN = "BOOLEAN"
@@ -13,8 +14,7 @@ TIME = "TIME"
 DATE = "DATE"
 TIMESTAMP = "TIMESTAMP"
 
-MAX_LENGTH = "65535"
-FALLBACK_DATATYPE = DataType(name=VARCHAR, length=MAX_LENGTH)
+FALLBACK_DATATYPE = DataType(name=TEXT)
 
 
 class DataTypeConverter:
@@ -40,7 +40,10 @@ class DataTypeConverter:
         }.get(json_schema_format, VARCHAR)
 
         if data_type == VARCHAR:
-            return DataType(name=VARCHAR, length=json_schema_max_length or MAX_LENGTH)
+            if json_schema_max_length:
+                return DataType(name=VARCHAR, length=json_schema_max_length)
+            else:
+                return DataType(name=TEXT)
         else:
             return DataType(name=data_type)
 
